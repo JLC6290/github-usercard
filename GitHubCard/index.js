@@ -42,7 +42,7 @@ function createCard(data) {
   gitName.classList.add('name');
   gitCardinfo.classList.add('card-info');
   gitUsername.classList.add('username');
-  
+
   gitCard.append(gitImg);
   gitCard.append(gitCardinfo);
   gitProfile.append(gitProfileURL);
@@ -82,7 +82,11 @@ axios.get('https://api.github.com/users/jlc6290/followers')
   .then(response => {
     console.log(response);
     response.data.forEach(item => {
-      document.querySelector('.cards').append(createCard(item));
+      axios.get(item.url)
+        .then(response => {
+          console.log(response);
+          document.querySelector('.cards').append(createCard(response.data));
+        })      
     })
   })
   .catch(error => {
